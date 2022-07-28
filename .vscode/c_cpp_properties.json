@@ -1,0 +1,14 @@
+{
+	"configurations": [
+		{
+			"name": "SphereKillerEditor Editor Linux Development (SphereKiller)",
+			"intelliSenseMode": "clang-x64",
+			"compileCommands": "/home/sbura/Projects/SphereKiller/.vscode/compileCommands_SphereKiller.json"
+		},
+		{
+			"name": "Linux",
+			"intelliSenseMode": "clang-x64",
+			"compileCommands": "/home/sbura/Projects/SphereKiller/.vscode/compileCommands_Default.json"
+		}
+	]
+}

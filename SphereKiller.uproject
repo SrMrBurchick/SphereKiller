@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{2C872790-3D57-4D41-AFF5-C3751AC2D2C8}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "SphereKiller",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}

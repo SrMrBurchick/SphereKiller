@@ -1,0 +1,121 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch SphereKiller (Debug)",
+			"request": "launch",
+			"program": "/home/sbura/Projects/SphereKiller/Binaries/Linux/SphereKiller-Linux-Debug",
+			"preLaunchTask": "SphereKiller Linux Debug Build",
+			"args": [
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKiller (DebugGame)",
+			"request": "launch",
+			"program": "/home/sbura/Projects/SphereKiller/Binaries/Linux/SphereKiller-Linux-DebugGame",
+			"preLaunchTask": "SphereKiller Linux DebugGame Build",
+			"args": [
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKiller (Development)",
+			"request": "launch",
+			"program": "/home/sbura/Projects/SphereKiller/Binaries/Linux/SphereKiller",
+			"preLaunchTask": "SphereKiller Linux Development Build",
+			"args": [
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKiller (Test)",
+			"request": "launch",
+			"program": "/home/sbura/Projects/SphereKiller/Binaries/Linux/SphereKiller-Linux-Test",
+			"preLaunchTask": "SphereKiller Linux Test Build",
+			"args": [
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKiller (Shipping)",
+			"request": "launch",
+			"program": "/home/sbura/Projects/SphereKiller/Binaries/Linux/SphereKiller-Linux-Shipping",
+			"preLaunchTask": "SphereKiller Linux Shipping Build",
+			"args": [
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKillerEditor (Debug)",
+			"request": "launch",
+			"program": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
+			"preLaunchTask": "SphereKillerEditor Linux Debug Build",
+			"args": [
+				"/home/sbura/Projects/SphereKiller/SphereKiller.uproject"
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKillerEditor (DebugGame)",
+			"request": "launch",
+			"program": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
+			"preLaunchTask": "SphereKillerEditor Linux DebugGame Build",
+			"args": [
+				"/home/sbura/Projects/SphereKiller/SphereKiller.uproject"
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Launch SphereKillerEditor (Development)",
+			"request": "launch",
+			"program": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Binaries/Linux/UnrealEditor",
+			"preLaunchTask": "SphereKillerEditor Linux Development Build",
+			"args": [
+				"/home/sbura/Projects/SphereKiller/SphereKiller.uproject"
+			],
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine",
+			"type": "cppdbg",
+			"visualizerFile": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+			"showDisplayString": true
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "coreclr",
+			"request": "launch",
+			"program": "/home/sbura/DevTools/GameEngine/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=/home/sbura/Projects/SphereKiller/SphereKiller.uproject",
+				"-game",
+				"-engine"
+			],
+			"console": "internalConsole",
+			"internalConsoleOptions": "openOnSessionStart",
+			"stopAtEntry": false,
+			"cwd": "/home/sbura/DevTools/GameEngine/UnrealEngine"
+		}
+	]
+}

@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <cstdint>
-
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "SphereKillerGameMode.generated.h"
@@ -16,7 +14,7 @@ class ASphereKillerGameMode : public AGameModeBase
 public:
 	ASphereKillerGameMode();
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<APawn> PlayerSphere;
 
 	// The intial spawn radius
@@ -47,7 +45,6 @@ public:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	float GoalSphereRadius;
 
-
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
@@ -55,7 +52,7 @@ public:
 	void DestroySphere(AActor* sphere);
 
 private:
-		void SpawnSphere();
+	void SpawnSphere();
 
 };
 

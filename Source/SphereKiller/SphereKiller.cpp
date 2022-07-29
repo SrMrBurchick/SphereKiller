@@ -3,5 +3,5 @@
 #include "SphereKiller.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, SphereKiller, "SphereKiller" );
- 
+IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, SphereKiller,
+                               "SphereKiller" );

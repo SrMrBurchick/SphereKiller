@@ -27,11 +27,22 @@ class ASphereKillerCharacter : public ACharacter
 	USkeletalMeshComponent* Mesh1P;
 
 	/** First person camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
+			meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
+
+	/** Sphere Killed **/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
+			meta = (AllowPrivateAccess = "true"));
+	int uSphereKilled;
 
 public:
 	ASphereKillerCharacter();
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
+			UPrimitiveComponent* OtherComp, FVector NormalImpulse,
+			const FHitResult& Hit);
 
 protected:
 	virtual void BeginPlay();

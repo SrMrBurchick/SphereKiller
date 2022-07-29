@@ -20,14 +20,20 @@ ASphereKillerCharacter::ASphereKillerCharacter()
 	// set our turn rates for input
 	TurnRateGamepad = 45.f;
 
-	// Create a CameraComponent	
-	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	// Create a CameraComponent
+	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(
+			TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
+	FirstPersonCameraComponent->SetRelativeLocation(
+			FVector(-39.56f, 1.75f, 64.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
-	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
-	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	/**
+	 * Create a mesh component that will be used when being viewed from a
+	 * '1st person' view (when controlling this pawn)
+	 **/
+	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(
+			TEXT("CharacterMesh1P"));
 	Mesh1P->SetOnlyOwnerSee(true);
 	Mesh1P->SetupAttachment(FirstPersonCameraComponent);
 	Mesh1P->bCastDynamicShadow = false;
@@ -46,32 +52,47 @@ void ASphereKillerCharacter::BeginPlay()
 
 //////////////////////////////////////////////////////////////////////////// Input
 
-void ASphereKillerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void ASphereKillerCharacter::SetupPlayerInputComponent(
+	class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 
 	// Bind jump events
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this,
+			&ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this,
+			&ACharacter::StopJumping);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("PrimaryAction", IE_Pressed, this, &ASphereKillerCharacter::OnPrimaryAction);
+	PlayerInputComponent->BindAction("PrimaryAction", IE_Pressed, this,
+			&ASphereKillerCharacter::OnPrimaryAction);
 
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
 
 	// Bind movement events
-	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &ASphereKillerCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("Move Right / Left", this, &ASphereKillerCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("Move Forward / Backward", this,
+			&ASphereKillerCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("Move Right / Left", this,
+			&ASphereKillerCharacter::MoveRight);
 
-	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
-	// "Mouse" versions handle devices that provide an absolute delta, such as a mouse.
-	// "Gamepad" versions are for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &ASphereKillerCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &ASphereKillerCharacter::LookUpAtRate);
+	/**
+	 * We have 2 versions of the rotation bindings to handle different kinds of
+	 * devices differently.
+	 * "Mouse" versions handle devices that provide an absolute delta, such as
+	 * a mouse.
+	 * "Gamepad" versions are for devices that we choose to treat as a rate of
+	 * change, such as an analog joystick
+	 **/
+	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this,
+			&APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this,
+			&APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this,
+			&ASphereKillerCharacter::TurnAtRate);
+	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this,
+			&ASphereKillerCharacter::LookUpAtRate);
 }
 
 void ASphereKillerCharacter::OnPrimaryAction()
@@ -80,23 +101,27 @@ void ASphereKillerCharacter::OnPrimaryAction()
 	OnUseItem.Broadcast();
 }
 
-void ASphereKillerCharacter::BeginTouch(const ETouchIndex::Type FingerIndex, const FVector Location)
+void ASphereKillerCharacter::BeginTouch(const ETouchIndex::Type FingerIndex,
+		const FVector Location)
 {
 	if (TouchItem.bIsPressed == true)
 	{
 		return;
 	}
+
 	if ((FingerIndex == TouchItem.FingerIndex) && (TouchItem.bMoved == false))
 	{
 		OnPrimaryAction();
 	}
+
 	TouchItem.bIsPressed = true;
 	TouchItem.FingerIndex = FingerIndex;
 	TouchItem.Location = Location;
 	TouchItem.bMoved = false;
 }
 
-void ASphereKillerCharacter::EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location)
+void ASphereKillerCharacter::EndTouch(const ETouchIndex::Type FingerIndex,
+		const FVector Location)
 {
 	if (TouchItem.bIsPressed == false)
 	{
@@ -135,15 +160,25 @@ void ASphereKillerCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
-bool ASphereKillerCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInputComponent)
+bool ASphereKillerCharacter::EnableTouchscreenMovement(
+		class UInputComponent* PlayerInputComponent)
 {
-	if (FPlatformMisc::SupportsTouchInput() || GetDefault<UInputSettings>()->bUseMouseForTouch)
+	if (FPlatformMisc::SupportsTouchInput()
+		|| GetDefault<UInputSettings>()->bUseMouseForTouch)
 	{
-		PlayerInputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ASphereKillerCharacter::BeginTouch);
-		PlayerInputComponent->BindTouch(EInputEvent::IE_Released, this, &ASphereKillerCharacter::EndTouch);
+		PlayerInputComponent->BindTouch(EInputEvent::IE_Pressed, this,
+				&ASphereKillerCharacter::BeginTouch);
+		PlayerInputComponent->BindTouch(EInputEvent::IE_Released, this,
+				&ASphereKillerCharacter::EndTouch);
 
 		return true;
 	}
-	
+
 	return false;
+}
+
+void ASphereKillerCharacter::OnHit(UPrimitiveComponent* HitComp,
+		AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		FVector NormalImpulse, const FHitResult& Hit)
+{
 }

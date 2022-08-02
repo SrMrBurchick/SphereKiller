@@ -45,15 +45,13 @@ void ASphereKillerProjectile::OnHit(UPrimitiveComponent* HitComp,
 {
 	// Only add impulse and destroy projectile if we hit a physics
 	if ((OtherActor != nullptr) && (OtherActor != this)
-		&& (OtherComp != nullptr) && OtherActor->ActorHasTag("Sphere"))
+		&& (OtherComp != nullptr))
 	{
 		UWorld* world = GetWorld();
 
 		ASphereKillerGameMode* gamemode =
 			world->GetAuthGameMode<ASphereKillerGameMode>();
 
-		gamemode->DestroySphere(OtherActor);
-
-		Destroy();
+		gamemode->ProcessActor(OtherActor);
 	}
 }

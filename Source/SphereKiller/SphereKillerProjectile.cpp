@@ -48,10 +48,21 @@ void ASphereKillerProjectile::OnHit(UPrimitiveComponent* HitComp,
 		&& (OtherComp != nullptr))
 	{
 		UWorld* world = GetWorld();
+		bool destroy = false;
 
+		UE_LOG(LogTemp, Log, TEXT("Bullet class: %s"), *GetClass()->GetName());
 		ASphereKillerGameMode* gamemode =
 			world->GetAuthGameMode<ASphereKillerGameMode>();
 
+		if (OtherActor->ActorHasTag("Sphere")) {
+			destroy = true;
+		}
+
 		gamemode->ProcessActor(OtherActor);
+
+		if (destroy) {
+			Destroy();
+		}
+
 	}
 }

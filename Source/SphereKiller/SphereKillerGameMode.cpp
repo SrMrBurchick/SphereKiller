@@ -1,5 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+#include "SphereKillerGameMode.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -7,7 +9,8 @@
 #include "GameFramework/Actor.h"
 #include "Math/UnrealMathUtility.h"
 #include "SphereKillerCharacter.h"
-#include "SphereKillerGameMode.h"
+#include "SphereKillerUI.h"
+#include "GeometryCollection/GeometryCollectionActor.h"
 
 #include "UObject/ConstructorHelpers.h"
 
@@ -48,6 +51,12 @@ ASphereKillerGameMode::ASphereKillerGameMode()
 				TEXT("/Game/Blueprints/Sphere_BP"));
 	PlayerSphere = PlayerSpherePawnClassFinder.Class;
 
+	static ConstructorHelpers::FClassFinder<UUserWidget>
+		PlayerHUDClassFinder(
+				TEXT("/Game/Blueprints/UI_BP"));
+	HUDWidget_Class = PlayerHUDClassFinder.Class;
+
+
 	// Init params
 	InitialSpawnRadius = cInitialSpawnRadius;
 	SphereAmountScale = cSphereAmountScale;
@@ -77,8 +86,9 @@ void ASphereKillerGameMode::BeginPlay()
 				InitialSpawnPosition = AllActorIt->GetActorLocation();
 				pTextActor = *AllActorIt;
 			} else if (AllActorIt->ActorHasTag("Killer")) {
-				UE_LOG(LogTemp, Log, TEXT("Killer Pos: %s"),
-						*AllActorIt->GetActorLocation().ToString());
+				UE_LOG(LogTemp, Log, TEXT("Killer Pos: %s, Class %s"),
+						*AllActorIt->GetActorLocation().ToString(),
+						*AllActorIt->GetClass()->GetName());
 				pKillerActor = *AllActorIt;
 			}
 		}
@@ -102,6 +112,13 @@ void ASphereKillerGameMode::BeginPlay()
 		SpawnSphere(spherePosition);
 	} else {
 		UE_LOG(LogTemp, Error, TEXT("Sphere Class is not detected!"));
+	}
+
+	// Create UI
+	if (HUDWidget_Class != nullptr) {
+		HUDWidget = CreateWidget(GetWorld(), HUDWidget_Class);
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("UI class is not detected!"));
 	}
 }
 
@@ -137,13 +154,19 @@ void ASphereKillerGameMode::ProcessActor(AActor* actor)
 		if (false == bGameStarted) {
 			bGameStarted = true;
 
+			HUDWidget->AddToViewport();
 			SpawnRadius = InitialSpawnRadius;
 			GenerateLevel();
 
 			pTextActor->Destroy();
 		} else {
-			ProcessSphere(actor);
+		  ProcessSphere(actor);
+
+			dynamic_cast<USphereKillerUI*>(HUDWidget)->setData(SphereCount,
+															  WaveCount);
 		}
+	} else {
+		UE_LOG(LogTemp, Log, TEXT("Hit someone"));
 	}
 }
 
@@ -163,7 +186,7 @@ void ASphereKillerGameMode::ProcessSphere(AActor* sphere)
 		UE_LOG(LogTemp, Log, TEXT("Killed: %d, Goal: %d"),
 			   SphereCount, GoalSphereCount);
 	}
-
+	
 	sphere->Destroy();
 
 	if (SphereCount >= GoalSphereCount) {

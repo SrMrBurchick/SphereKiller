@@ -4,6 +4,7 @@
 
 #include <list>
 
+#include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameLevelFactory/IGameLevelFactory.h"
@@ -50,6 +51,12 @@ public:
 	// Spawn radius inside which that the killed spheres counting as goal sphere
 	UPROPERTY(EditAnywhere)
 	float GoalSphereRadius;
+
+	// Spawn radius inside which that the killed spheres counting as goal sphere
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI HUD")
+		TSubclassOf<UUserWidget> HUDWidget_Class;
+	UUserWidget* HUDWidget;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int SphereCount;

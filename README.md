@@ -22,7 +22,15 @@ UE4 Developer
 4. Надіслати нам необхідно сам проект (без тимчасових файлів Saved, Intermediate, VS).
 
 Додаткові завдання:
-1. Дати можливість змінювати всі введені в завданні параметри.
-2. Додати ефект знищення сфер.
-3. З появою кожної нової сфери зменшувати її розмір до зазначеного, з можливістю налаштовувати крок зміни та мінімальний розмір.
-4. Додати UI на екран із відображенням кількості знищених сфер та номером хвилі.
+1. Дати можливість змінювати всі введені в завданні параметри. +
+2. Додати ефект знищення сфер. -
+3. З появою кожної нової сфери зменшувати її розмір до зазначеного, з можливістю налаштовувати крок зміни та мінімальний розмір. -
+4. Додати UI на екран із відображенням кількості знищених сфер та номером хвилі. +
+
+# Realization report
+So, i've created main logic to the SphereKillerGameMode class. I've some issue
+while I was implementing this:
+ 1. Data from Blueprint clas not aplying affect in cpp class. Nothing has janged. So for spawning Sphere I add ClassFinder object at the BeginPlay method.
+ 2. The same problem was when I tried to add UUserWidget class, so I solved it in the smae way.
+ 3. The sphere destroing animation was'nt add. I've tried to slvoe this by using Frature. But as I say the Blueprint class has a strange behaviour
+ 4. The sphere radius changing TODO
